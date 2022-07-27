@@ -1,28 +1,97 @@
 <template>
   <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+   <main>
+    <div class="seach-box">
+      <input type="text" class="seach-bar" placeholder="Seach..." />
+    </div>
+      <div class="weather-wrap">
+        <div class="location-box">
+          <div class="location">Northhampton, UK</div>
+          <div class="date">Monday 20 Janaury 2020</div>
+        </div>
+        
+        <div class="weather-box">
+          <div class="temp">9°C</div>
+          <div class="weather">Rain</div>
+        </div>
+      </div>
+   </main>
   </div>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
+
 
 export default {
   name: 'App',
-  components: {
-    HelloWorld
+  data(){
+    return{
+
+        api_key: "2ae77795bfe93e7c09734074923b9ad7"
+    }
   }
 }
 </script>
 
 <style>
+*{
+  margin:0 ;
+  padding: 0;
+  box-sizing: border-box;
+
+}
+
+body{
+  font-family: 'montserrat', sans-serif;
+}
+
 #app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+
+  background-image: url('./assets/cold-bg.jpg');
+  background-size: cover;
+  background-position: bottom;
+  transition: 0.4s;
+ }
+main{
+  min-height: 100vh;
+  padding: 25px;
+  background-image:linear-gradient(to bottom, rgba(0,0,0,0.25), rgba(0,0,0,0.75));
+}
+
+.seach-box {
+  width: 100%;
+  margin-bottom: 30px;
+  
+}
+.seach-box .seach-bar{
+  display: block;
+  width: 100%;
+  padding: 25px;
+  color: #313131;
+  font-size: 20px;
+  appearance: none;
+  border: none;
+  outline: none;
+  background: none;
+  
+  box-shadow: 0px 0px 8px rgba(0,0,0,0.25);
+  background-color:rgba(255,255,255,0.5);
+  border-radius:0px 16px 0px 16px ;
+  transition: 00.4s;
+}
+
+.seach-box .seach-bar:focus{
+  box-shadow: 0px 0px 16px rgba(0,0,0,0.25);
+  background-color: rgba(255,255,255,0.75);
+  border-radius: 16px 0px 16px 0px;
+
+}
+
+.location-box .location{
+  color: white ;
+  font-size: 32px;
+  font-weight: 500;
   text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
+  text-shadow: 0px;
 }
 </style>
