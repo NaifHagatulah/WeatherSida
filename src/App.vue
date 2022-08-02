@@ -2,17 +2,27 @@
   <div id="app">
    <main>
     <div class="seach-box">
-      <input type="text" class="seach-bar" placeholder="Seach..." />
+      <input 
+      type="text" 
+      class="seach-bar" 
+      placeholder="Seach..."
+      v-model = "query"
+      @keypress="featchWeather"
+      
+      />
+      
+      
     </div>
-      <div class="weather-wrap">
+      
+      <div class="weather-wrap" v-if="typeof weather.main != 'undefined'">
         <div class="location-box">
-          <div class="location">Northhampton, UK</div>
-          <div class="date">Monday 20 Janaury 2020</div>
+          <div class="location">{{weather.name}},{{weather.sys.country}}</div>
+          <div class="date">RIGHT NOW</div>
         </div>
         
         <div class="weather-box">
-          <div class="temp">9°C</div>
-          <div class="weather">Rain</div>
+          <div class="temp">{{weather.main.temp}}</div>
+          <div class="weather">{{weather.weather[0].description}}</div>
         </div>
       </div>
    </main>
@@ -22,15 +32,52 @@
 <script>
 
 
+
+
+
+
+
 export default {
   name: 'App',
   data(){
     return{
-
-        api_key: "2ae77795bfe93e7c09734074923b9ad7"
+        backgroundimage: 'snow',
+        api_key: "2ae77795bfe93e7c09734074923b9ad7",
+        url_base: "https://api.openweathermap.org/data/2.5/",
+        query:'',
+        weather: {},
+        location: {}
+        
     }
-  }
-}
+  },
+  methods:{
+          
+      
+        featchWeather(e){
+             
+             if(e.key == "Enter" ){
+              this.array = this.query.split(" ")
+              fetch('https://api.openweathermap.org/data/2.5/weather?lat=' + location.lat + '&lon='+ location.lon +'&appid=2ae77795bfe93e7c09734074923b9ad7&units=metric')
+              .then(res => {
+                return res.json();
+              }).then(this.setResults);
+              fetch('http://api.openweathermap.org/geo/1.0/direct?q='+ this.array[0] + '&appid=2ae77795bfe93e7c09734074923b9ad7')
+              .then(location =>{
+                return location.json();
+              }).then(this.setResults)
+            }
+        },
+        setResults (results, location){
+          this.location = location;
+          this.weather = results;
+          console.log(this.query);
+          console.log(this.array[2]);
+          console.log(this.weather);
+          console.log(this.location.name.lat)
+        },
+
+      }
+    }
 </script>
 
 <style>
@@ -92,6 +139,36 @@ main{
   font-size: 32px;
   font-weight: 500;
   text-align: center;
-  text-shadow: 0px;
+  text-shadow: 0px 3px rgba(0, 0, 0, 0.25);
+}
+.location-box .date{
+  color: white ;
+  font-size: 23px;
+  font-weight: 300;
+  text-align: center;
+  text-emphasis-style: italic;
+}
+.weather-box{
+  text-align: center;
+}
+
+.weather-box .temp{
+display: inline-block;
+padding: 10px 25px;
+color: white;
+font-size: 102px;
+font-weight: 900;
+text-shadow: 3px 6px rgba(255,255,255,0.25);
+background-color: rgba(255,255,255,0.25);
+border-radius: 16px;
+margin: 30px 0px;
+box-shadow: 3px 6px rgba(0, 0, 0, 0.25);
+}
+.weather-box .weather{
+color: #fff;
+font-size: 48px;
+font-weight: 700;
+font-style: italic;
+text-shadow: 3px 6x rgba(0, 0, 0, 0.25);
 }
 </style>
